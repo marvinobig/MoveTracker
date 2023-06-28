@@ -16,7 +16,7 @@ if (userTrack)
 }
 else
 {
-    Console.WriteLine("Number of Moves  Not Tracked");
+    Console.WriteLine("Number of Moves Not Tracked");
 }
 
 foreach (Move move in new MoveRepository(dbPath).GetAllMove())
