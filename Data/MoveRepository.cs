@@ -28,8 +28,6 @@ namespace MoveTracker.Data
                 _dbConn = new SQLiteConnection(dbPath);
                 _dbConn.CreateCommand(dbCommands).ExecuteNonQuery();
                 _dbConn.Close();
-
-                Console.WriteLine("Move Table Created");
             }
             catch (SQLiteException err)
             {
@@ -37,7 +35,7 @@ namespace MoveTracker.Data
             }
         }
 
-        public List<Move> GetAllMove() 
+        internal List<Move> GetAllMove() 
         {
             try
             {
@@ -57,16 +55,36 @@ namespace MoveTracker.Data
             return new List<Move>();
         }
 
-        public void AddMove(Move move)
+        internal void AddMove(int move)
         {
-            _dbConn = new SQLiteConnection(_dbPath);
-            _dbConn.Insert(move);
+
+            try
+            {
+                string dbCommands = @$"INSERT INTO move (numOfMoves) VALUES ({move})";
+                _dbConn = new SQLiteConnection(_dbPath);
+                _dbConn.CreateCommand(dbCommands).ExecuteNonQuery();
+                _dbConn.Close();
+            }
+            catch (SQLiteException err)
+            {
+                Console.WriteLine(err.Message);
+            }
         }
 
-        public void DeleteMove(int id)
+        internal void DeleteMove(int id)
         {
-            _dbConn = new SQLiteConnection(_dbPath);
-            _dbConn.Delete(new Move { Id = id });
+            try
+            {
+                string dbCommands = $@"DELETE FROM move WHERE Id = {id}";
+                _dbConn = new SQLiteConnection(_dbPath);
+                _dbConn.CreateCommand(dbCommands).ExecuteNonQuery();
+                _dbConn.Close();
+            }
+            catch (SQLiteException err)
+            {
+                Console.WriteLine(err.Message);
+            }
+            
         }
     }
 }
