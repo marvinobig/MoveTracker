@@ -37,8 +37,9 @@ namespace MoveTracker
             }
         }
 
-        public void DisplayMenu() 
+        public void DisplayMenu(string err = "") 
         {
+            Console.ResetColor();
             Console.Clear();
 
             for (int i = 0; i < _seperator; i++)
@@ -63,6 +64,20 @@ namespace MoveTracker
             }
 
             Console.WriteLine("");
+            if (err != "") Console.WriteLine(err.ToUpper(), Console.BackgroundColor = ConsoleColor.Red);
+            Console.WriteLine("");
+            Console.ResetColor();
+            
+            bool userChoice = int.TryParse(Console.ReadLine(), out int typedNum);
+
+            if (userChoice)
+            {
+                Console.WriteLine($"You've chosen {typedNum}");
+            } 
+            else
+            {
+                DisplayMenu("Please type a number from one of the options");
+            }
         }
 
         static void QuitApp() => Environment.Exit(0);
