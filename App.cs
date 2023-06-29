@@ -23,8 +23,13 @@ namespace MoveTracker
                 Console.Write('-');
             }
 
+            Console.WriteLine("");
             Console.WriteLine("Welcome to Move Tracker");
             Console.WriteLine("Track how much you move throughout the day");
+            Console.WriteLine("");
+            Console.WriteLine("Press any key to continue");
+            Console.ReadLine();
+            Console.WriteLine("");
 
             for (int i = 0; i < _seperator; i++)
             {
@@ -41,6 +46,7 @@ namespace MoveTracker
                 Console.Write('-');
             }
 
+            Console.WriteLine("");
             Console.WriteLine("MAIN MENU");
             Console.WriteLine("");
             Console.WriteLine("What would you like to do?");
