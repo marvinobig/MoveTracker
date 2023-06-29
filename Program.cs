@@ -19,6 +19,8 @@ else
     Console.WriteLine("Number of Moves Not Tracked");
 }
 
+
+Console.Clear();
 foreach (Move move in new MoveRepository(dbPath).GetAllMove())
 {
     Console.WriteLine($"ID: {move.Id}");
@@ -26,7 +28,6 @@ foreach (Move move in new MoveRepository(dbPath).GetAllMove())
     Console.WriteLine($"Date Recorded: {move.timeRecorded}");
     Console.WriteLine("");
 }
-
 Console.Write("What move do you want to delete? ");
 bool userDelete = int.TryParse(Console.ReadLine(), out int movesDelete);
 
@@ -38,4 +39,21 @@ if (userDelete)
 else
 {
     Console.WriteLine("Move Not Deleted");
+}
+
+
+Console.Clear();
+Console.Write("What move do you want to update? ");
+bool moveUpdate = int.TryParse(Console.ReadLine(), out int moveToUpdate);
+
+if (moveUpdate)
+{
+    Console.WriteLine("What is the new value? ");
+    bool moveId = int.TryParse(Console.ReadLine(),out int newMoveValue);
+
+    if (moveId) new MoveRepository(dbPath).UpdateMove(moveToUpdate, newMoveValue);
+}
+else
+{
+    Console.WriteLine("Move Not Updated");
 }
