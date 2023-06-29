@@ -75,7 +75,7 @@ namespace MoveTracker.Data
         {
             try
             {
-                string dbCommands = @$"UPDATE move numOfMoves = {newValue} WHERE Id = {id}";
+                string dbCommands = @$"UPDATE move SET numOfMoves={newValue} WHERE Id={id}";
                 _dbConn = new SQLiteConnection(_dbPath);
                 _dbConn.CreateCommand(dbCommands).ExecuteNonQuery();
                 _dbConn.Close();
