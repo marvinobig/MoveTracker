@@ -35,6 +35,22 @@ namespace MoveTracker.Data
             }
         }
 
+        internal void AddMove(int move)
+        {
+
+            try
+            {
+                string dbCommands = @$"INSERT INTO move (numOfMoves) VALUES ({move})";
+                _dbConn = new SQLiteConnection(_dbPath);
+                _dbConn.CreateCommand(dbCommands).ExecuteNonQuery();
+                _dbConn.Close();
+            }
+            catch (SQLiteException err)
+            {
+                Console.WriteLine(err.Message);
+            }
+        }
+
         internal List<Move> GetAllMove() 
         {
             try
@@ -55,15 +71,15 @@ namespace MoveTracker.Data
             return new List<Move>();
         }
 
-        internal void AddMove(int move)
+        internal void UpdateMove(int id, int newValue)
         {
-
             try
             {
-                string dbCommands = @$"INSERT INTO move (numOfMoves) VALUES ({move})";
+                string dbCommands = @$"UPDATE move numOfMoves = {newValue} WHERE Id = {id}";
                 _dbConn = new SQLiteConnection(_dbPath);
                 _dbConn.CreateCommand(dbCommands).ExecuteNonQuery();
                 _dbConn.Close();
+
             }
             catch (SQLiteException err)
             {
