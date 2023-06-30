@@ -72,9 +72,10 @@ namespace MoveTracker
             Console.WriteLine("");
             Console.ResetColor();
             
+            Console.Write("Your Choice: ");
             bool userChoice = int.TryParse(Console.ReadLine(), out int userChoiceNum);
 
-            if (userChoice)
+            if (userChoice && (userChoiceNum >= 0 && userChoiceNum <= 4))
             {
                 Console.Clear();
                 _actions.DecisionHandler(userChoiceNum);
