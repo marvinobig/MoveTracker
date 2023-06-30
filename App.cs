@@ -1,24 +1,12 @@
 ﻿using MoveTracker.Data;
 
-
 namespace MoveTracker
 {
-    internal class App
+    internal static class App
     {
-        private readonly int _seperator;
-        public readonly MoveRepository Repository;
-        public readonly MoveTrackerActions _actions;
-
-        public App(string dbPath, int seperator)
+        internal static void DisplayIntro(int seperator)
         {
-            _seperator = seperator;
-            Repository = new MoveRepository(dbPath);
-            _actions = new MoveTrackerActions(dbPath);
-        }
-
-        public void DisplayIntro()
-        {
-            for (int i = 0; i < _seperator; i++)
+            for (int i = 0; i < seperator; i++)
             {
                 Console.Write('-');
             }
@@ -28,7 +16,7 @@ namespace MoveTracker
             Console.ResetColor();
             Console.WriteLine("Track how much you move throughout the day");
 
-            for (int i = 0; i < _seperator; i++)
+            for (int i = 0; i < seperator; i++)
             {
                 Console.Write('-');
             }
@@ -40,12 +28,12 @@ namespace MoveTracker
             Console.WriteLine("");
         }
 
-        public void DisplayMenu(string err = "") 
+        internal static void DisplayMenu(MoveRepository repository, int seperator, string err = "") 
         {
             Console.ResetColor();
             Console.Clear();
 
-            for (int i = 0; i < _seperator; i++)
+            for (int i = 0; i < seperator; i++)
             {
                 Console.Write('-');
             }
@@ -62,7 +50,7 @@ namespace MoveTracker
             Console.WriteLine("Type 3 to Update a Record");
             Console.WriteLine("Type 4 to Delete a Record");
 
-            for (int i = 0; i < _seperator; i++)
+            for (int i = 0; i < seperator; i++)
             {
                 Console.Write('-');
             }
@@ -78,14 +66,14 @@ namespace MoveTracker
             if (userChoice && (userChoiceNum >= 0 && userChoiceNum <= 4))
             {
                 Console.Clear();
-                _actions.DecisionHandler(userChoiceNum);
+                MoveTrackerActions.DecisionHandler(repository, userChoiceNum);
             } 
             else
             {
-                DisplayMenu("Please type a number from one of the options");
+                DisplayMenu(repository, seperator, "Please type a number from one of the options");
             }
         }
 
-        public static void QuitApp() => Environment.Exit(0);
+        internal static void QuitApp() => Environment.Exit(0);
     }
 }

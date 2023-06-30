@@ -1,7 +1,9 @@
 ﻿using MoveTracker;
+using MoveTracker.Data;
 
 string dbPath = Path.Combine(Environment.CurrentDirectory, "MoveDB.sql");
+int seperator = 51;
+MoveRepository repository = new(dbPath);
 
-App MoveApp = new(dbPath, 50);
-MoveApp.DisplayIntro();
-MoveApp.DisplayMenu();
+App.DisplayIntro(seperator);
+App.DisplayMenu(repository, seperator);

@@ -5,14 +5,7 @@ namespace MoveTracker
 {
     internal class MoveTrackerActions
     {
-        private readonly MoveRepository _repository;
-
-        public MoveTrackerActions(string dbPath) 
-        { 
-            _repository = new MoveRepository(dbPath);
-        }
-
-        public void DecisionHandler(int userChoiceNum)
+        public static void DecisionHandler(MoveRepository repository, int userChoiceNum)
         {
             switch (userChoiceNum)
             {
@@ -20,21 +13,21 @@ namespace MoveTracker
                     App.QuitApp();
                     break;
                 case 1:
-                    TrackNewMove();
+                    TrackNewMove(repository);
                     break;
                 case 2:
-                    DisplayListOfMoves();
+                    DisplayListOfMoves(repository);
                     break;
                 case 3:
-                    UpdateListOfMoves();
+                    UpdateListOfMoves(repository);
                     break;
                 case 4:
-                    DeleteMoveById();
+                    DeleteMoveById(repository);
                     break;
             }
         }
 
-        private void TrackNewMove(string err = "")
+        internal static void TrackNewMove(MoveRepository repository, string err = "")
         {
             Console.Clear();
 
@@ -42,38 +35,48 @@ namespace MoveTracker
             Console.ResetColor();
             Console.WriteLine("");
 
-            Console.Write("How much have you moved today? ");
+            Console.WriteLine("How much have you moved today? ");
             bool userTrack = int.TryParse(Console.ReadLine(), out int movesNum);
 
             if (userTrack)
             {
-                _repository.AddMove(movesNum);
+                repository.AddMove(movesNum);
                 Console.WriteLine("Number of Moves Tracked", Console.BackgroundColor = ConsoleColor.Green, Console.ForegroundColor = ConsoleColor.Black);
                 Console.ResetColor();
+
+                Console.WriteLine("");
+                Console.Write("Press any key to return to the main menu ");
+                Console.ReadLine();
+                App.DisplayMenu(repository, 51);
             }
             else
             {
-                TrackNewMove("moves not tracked as you need to enter a valid number");
+                TrackNewMove(repository, "moves not tracked as you need to enter a valid number");
             }
         }
 
-        private void DisplayListOfMoves()
+        internal static void DisplayListOfMoves(MoveRepository repository)
         {
             Console.Clear();
             Console.WriteLine("All Tracked Moves:".ToUpper(), Console.BackgroundColor = ConsoleColor.Green, Console.ForegroundColor = ConsoleColor.Black);
             Console.ResetColor(); 
             Console.WriteLine("");
 
-            foreach (Move move in _repository.GetAllMove())
+            foreach (Move move in repository.GetAllMove())
             {
                 Console.WriteLine($"ID: {move.Id}");
                 Console.WriteLine($"Moves: {move.numOfMoves}");
                 Console.WriteLine($"Date Recorded: {move.timeRecorded}");
                 Console.WriteLine("");
             }
+
+            Console.WriteLine("");
+            Console.Write("Press any key to return to the main menu ");
+            Console.ReadLine();
+            App.DisplayMenu(repository, 51);
         }
 
-        private void UpdateListOfMoves(string err = "")
+        internal static void UpdateListOfMoves(MoveRepository repository, string err = "")
         {
             Console.Clear();
 
@@ -81,7 +84,7 @@ namespace MoveTracker
             Console.WriteLine("");
             Console.ResetColor();
 
-            Console.Write("What move do you want to update? ", Console.BackgroundColor = ConsoleColor.Green, Console.ForegroundColor = ConsoleColor.Black);
+            Console.WriteLine("What move do you want to update? ", Console.BackgroundColor = ConsoleColor.Green, Console.ForegroundColor = ConsoleColor.Black);
             Console.ResetColor();
             bool moveUpdate = int.TryParse(Console.ReadLine(), out int moveToUpdate);
 
@@ -91,15 +94,29 @@ namespace MoveTracker
                 Console.ResetColor();
                 bool moveId = int.TryParse(Console.ReadLine(), out int newMoveValue);
 
-                if (moveId) _repository.UpdateMove(moveToUpdate, newMoveValue);
+                if (moveId)
+                {
+                    repository.UpdateMove(moveToUpdate, newMoveValue);
+                    Console.WriteLine("Move Updated", Console.BackgroundColor = ConsoleColor.Green, Console.ForegroundColor = ConsoleColor.Black);
+                    Console.ResetColor();
+
+                    Console.WriteLine("");
+                    Console.Write("Press any key to return to the main menu ");
+                    Console.ReadLine();
+                    App.DisplayMenu(repository, 51);
+                }
+                else
+                {
+                    UpdateListOfMoves(repository, "move not updated as you need to enter a valid id");
+                }
             }
             else
             {
-                UpdateListOfMoves("move not updated as you need to enter a valid id");
+                UpdateListOfMoves(repository, "move not updated as you need to enter a valid id");
             }
         }
 
-        private void DeleteMoveById(string err = "")
+        internal static void DeleteMoveById(MoveRepository repository, string err = "")
         {
             Console.Clear();
 
@@ -107,19 +124,24 @@ namespace MoveTracker
             Console.WriteLine("");
             Console.ResetColor();
 
-            Console.Write("What move do you want to delete? ", Console.BackgroundColor = ConsoleColor.Green, Console.ForegroundColor = ConsoleColor.Black);
+            Console.WriteLine("What move do you want to delete? ", Console.BackgroundColor = ConsoleColor.Green, Console.ForegroundColor = ConsoleColor.Black);
             Console.ResetColor();
             bool userDelete = int.TryParse(Console.ReadLine(), out int movesDeleteNum);
 
             if (userDelete)
             {
-                _repository.DeleteMove(movesDeleteNum);
+                repository.DeleteMove(movesDeleteNum);
                 Console.WriteLine("Chosen Move Deleted", Console.BackgroundColor = ConsoleColor.Green, Console.ForegroundColor = ConsoleColor.Black);
                 Console.ResetColor();
+
+                Console.WriteLine("");
+                Console.Write("Press any key to return to the main menu ");
+                Console.ReadLine();
+                App.DisplayMenu(repository, 51);
             }
             else
             {
-                DeleteMoveById("move not deleted as you need to enter a valid id");
+                DeleteMoveById(repository, "move not deleted as you need to enter a valid id");
             }
 
         }
