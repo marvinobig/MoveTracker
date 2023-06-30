@@ -1,6 +1,6 @@
 ﻿namespace MoveTracker.Models
 {
-    public class Move
+    internal class Move
     {
         public int Id { get; set; }
         public int numOfMoves { get; set; }
