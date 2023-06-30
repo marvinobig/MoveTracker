@@ -7,11 +7,13 @@ namespace MoveTracker
     {
         private readonly int _seperator;
         public readonly MoveRepository Repository;
+        public readonly MoveTrackerActions _actions;
 
         public App(string dbPath, int seperator)
         {
             _seperator = seperator;
             Repository = new MoveRepository(dbPath);
+            _actions = new MoveTrackerActions(dbPath);
         }
 
         public void DisplayIntro()
@@ -71,7 +73,7 @@ namespace MoveTracker
             if (userChoice)
             {
                 Console.Clear();
-                MoveTrackerActions.DecisionHandler(userChoiceNum);
+                _actions.DecisionHandler(userChoiceNum);
             } 
             else
             {
