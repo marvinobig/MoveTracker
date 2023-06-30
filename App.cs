@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MoveTracker.Data;
+
 
 namespace MoveTracker
 {
     internal class App
     {
-        private readonly string _dbPath;
         private readonly int _seperator;
+        public readonly MoveRepository Repository;
+
         public App(string dbPath, int seperator)
         {
-            _dbPath = dbPath;
             _seperator = seperator;
+            Repository = new MoveRepository(dbPath);
         }
 
         public void DisplayIntro()
@@ -68,11 +66,12 @@ namespace MoveTracker
             Console.WriteLine("");
             Console.ResetColor();
             
-            bool userChoice = int.TryParse(Console.ReadLine(), out int typedNum);
+            bool userChoice = int.TryParse(Console.ReadLine(), out int userChoiceNum);
 
             if (userChoice)
             {
-                Console.WriteLine($"You've chosen {typedNum}");
+                Console.Clear();
+                MoveTrackerActions.DecisionHandler(userChoiceNum);
             } 
             else
             {
@@ -80,6 +79,6 @@ namespace MoveTracker
             }
         }
 
-        static void QuitApp() => Environment.Exit(0);
+        public static void QuitApp() => Environment.Exit(0);
     }
 }
