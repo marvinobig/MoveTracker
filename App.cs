@@ -24,17 +24,20 @@ namespace MoveTracker
             }
 
             Console.WriteLine("");
-            Console.WriteLine("Welcome to Move Tracker");
+            Console.WriteLine("Welcome to Move Tracker", Console.BackgroundColor = ConsoleColor.Green, Console.ForegroundColor = ConsoleColor.Black);
+            Console.ResetColor();
             Console.WriteLine("Track how much you move throughout the day");
-            Console.WriteLine("");
-            Console.WriteLine("Press any key to continue");
-            Console.ReadLine();
-            Console.WriteLine("");
 
             for (int i = 0; i < _seperator; i++)
             {
                 Console.Write('-');
             }
+
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.Write("Press any key to continue ");
+            Console.ReadLine();
+            Console.WriteLine("");
         }
 
         public void DisplayMenu(string err = "") 
@@ -48,7 +51,8 @@ namespace MoveTracker
             }
 
             Console.WriteLine("");
-            Console.WriteLine("MAIN MENU");
+            Console.WriteLine("MAIN MENU", Console.BackgroundColor = ConsoleColor.Green, Console.ForegroundColor = ConsoleColor.Black);
+            Console.ResetColor();
             Console.WriteLine("");
             Console.WriteLine("What would you like to do?");
             Console.WriteLine("");
@@ -64,7 +68,7 @@ namespace MoveTracker
             }
 
             Console.WriteLine("");
-            if (err != "") Console.WriteLine(err.ToUpper(), Console.BackgroundColor = ConsoleColor.Red);
+            if (err != "") Console.WriteLine(err.ToUpper(), Console.BackgroundColor = ConsoleColor.Red, Console.ForegroundColor = ConsoleColor.Black);
             Console.WriteLine("");
             Console.ResetColor();
             
